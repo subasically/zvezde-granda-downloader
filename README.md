@@ -1,3 +1,3 @@
-# youtube-auto-playlist
+# Zvezde Granda Downloader
 
 Downloads newest video uploaded.
