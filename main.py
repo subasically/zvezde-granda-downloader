@@ -29,13 +29,17 @@ API_KEY = os.getenv("API_KEY", "")
 CHANNEL_ID = 'UChz9nfVNmUiZryQtekbzS5g'
 # Changes episode number everyweek to match uploaded episode number
 QUERY = f"Zvezde Granda Cela emisija {todays_date_eu}"
-print(QUERY)
 # Save as filename
 FILENAME = f"Zvezde Granda - S{SEASON_NUMBER:02}E{EPISODE_NUMBER:02}"
 # Max amount of search resultes from YouTube Search API
 MAX_RESULTS=1
 # We want MP4 for best playback on Apple devices
 FORMAT = 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'
+
+# Display all passed in variables
+print("***********ENV VARIABLES***********")
+for name, value in os.environ.items():
+    print("{0}: {1}".format(name, value))
 
 # Prevent downloading of the same episode
 if os.path.isfile(f"downloads/{FILENAME}"):
