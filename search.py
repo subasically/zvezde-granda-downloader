@@ -2,6 +2,7 @@ import sys
 from googleapiclient.discovery import build
 
 def channel_videos(QUERY, API_KEY, PUBLISHED_AFTER, PUBLISHED_BEFORE,CHANNEL_ID, MAX_RESULTS):
+    print("Searching YouTube for new episodes...", QUERY, API_KEY, PUBLISHED_AFTER, PUBLISHED_BEFORE, CHANNEL_ID, MAX_RESULTS)
     youtube = build('youtube', 'v3', developerKey=API_KEY)
 
     request = youtube.search().list(
