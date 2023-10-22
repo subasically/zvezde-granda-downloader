@@ -53,7 +53,7 @@ if not API_KEY:
 
 if __name__ == "__main__":
     try:
-        search_results = search.channel_videos(QUERY, API_KEY, PUBLISHED_AFTER, PUBLISHED_BEFORE, CHANNEL_ID, MAX_RESULTS)
+        search_results = search.channel_videos(QUERY, API_KEY, CHANNEL_ID, MAX_RESULTS)
     except ValueError:
         print("Invalid value!")
 
