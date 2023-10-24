@@ -16,6 +16,8 @@ todays_day = now.strftime('%A')
 todays_date = now.strftime("%Y-%m-%d")
 todays_date_eu = now.strftime("%d.%m.%Y")
 
+API_KEY = os.getenv("API_KEY", "")
+SLACK_WEBHOOK = os.getenv("SLACK_WEBHOOK", "")
 # Get only current Saturday's video
 PUBLISHED_AFTER = os.getenv("PUBLISHED_AFTER", now.strftime('%Y-%m-%dT00:00:00Z'))
 PUBLISHED_BEFORE =  os.getenv("PUBLISHED_BEFORE", now.strftime(f'{tomorrow}T00:00:00Z'))
@@ -24,7 +26,6 @@ EPISODE_NUMBER = os.getenv("EPISODE_NUMBER", int(week_number) - 38)
 # Current year + next year - 4031 gives us this season
 SEASON_NUMBER = year + (year + 1) - 4031
 # YouTube Data API Key
-API_KEY = os.getenv("API_KEY", "")
 # Zvezde Granda Channel ID
 CHANNEL_ID = os.getenv("CHANNEL_ID", "UChz9nfVNmUiZryQtekbzS5g")
 # Changes episode number everyweek to match uploaded episode number
@@ -58,7 +59,7 @@ if __name__ == "__main__":
         print("Invalid value!")
 
     try:
-        download.video(search_results, FILENAME, FORMAT)
+        download.video(search_results, FILENAME, FORMAT, SLACK_WEBHOOK)
         print('downloading')
     except ValueError:
         print("Invalid value!")

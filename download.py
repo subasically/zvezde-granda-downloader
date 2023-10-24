@@ -2,7 +2,7 @@ import yt_dlp
 import save_file
 import notification
 
-def video(response, FILENAME, FORMAT):
+def video(response, FILENAME, FORMAT, WEBHOOK):
     ydl_options = {
         'outtmpl': "downloads/" + FILENAME,
         'format': FORMAT
@@ -19,4 +19,4 @@ def video(response, FILENAME, FORMAT):
 
         ydl.download(video_url)
 
-        notification.slack("Zvezde Granda Downloader", FILENAME, thumb_max_url)
+        notification.slack(WEBHOOK, "Zvezde Granda Downloader", FILENAME, thumb_max_url)
