@@ -1,12 +1,16 @@
 import os
 import sys
 from datetime import datetime, timedelta
+import pytz
+
+now = datetime.now()
+tz = pytz.timezone("America/Chicago")
+obj = tz.localize(now)
 
 # Local Modules
 import download
 import search
 
-now = datetime.now()
 start_year = 2004
 year = int(now.strftime("%Y"))
 yesterday = (now - timedelta(days=1)).strftime("%Y-%m-%d")
@@ -59,7 +63,7 @@ if __name__ == "__main__":
         print("Invalid value!")
 
     try:
-        # download.video(search_results, FILENAME, FORMAT, SLACK_WEBHOOK)
+        download.video(search_results, FILENAME, FORMAT, SLACK_WEBHOOK)
         print("downloading")
     except ValueError:
         print("Invalid value!")
