@@ -3,9 +3,8 @@ import sys
 from datetime import datetime, timedelta
 import pytz
 
-now = datetime.now()
 tz = pytz.timezone("America/Chicago")
-obj = tz.localize(now)
+now = tz.localize(datetime.now())
 
 # Local Modules
 import download
