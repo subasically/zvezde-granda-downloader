@@ -24,8 +24,7 @@ SLACK_WEBHOOK = os.getenv(
     "SLACK_WEBHOOK",
     "",
 )
-# VIDEO_DATE = os.getenv("VIDEO_DATE", todays_date_eu)
-VIDEO_DATE = os.getenv("VIDEO_DATE", "11-11-2023")
+VIDEO_DATE = os.getenv("VIDEO_DATE", todays_date_eu)
 EPISODE_NUMBER = os.getenv("EPISODE_NUMBER", int(week_number) - 38)
 SEASON_NUMBER = year + (year + 1) - 4031
 CHANNEL_ID = os.getenv("CHANNEL_ID", "UChz9nfVNmUiZryQtekbzS5g")
