@@ -3,7 +3,7 @@ import sys
 from datetime import datetime, timedelta
 import pytz
 
-tz = pytz.timezone("America/Chicago")
+tz = pytz.timezone("Germany/Berlin")
 now = tz.localize(datetime.now())
 
 # Local Modules
