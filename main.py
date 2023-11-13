@@ -25,7 +25,7 @@ SLACK_WEBHOOK = os.getenv("SLACK_WEBHOOK", "")
 # PUBLISHED_AFTER = os.getenv("PUBLISHED_AFTER", now.strftime('%Y-%m-%dT00:00:00Z'))
 # PUBLISHED_BEFORE =  os.getenv("PUBLISHED_BEFORE", now.strftime(f'{tomorrow}T00:00:00Z'))
 # Show is released weekly
-EPISODE_NUMBER = os.getenv("EPISODE_NUMBER", int(week_number) - 37)
+EPISODE_NUMBER = os.getenv("EPISODE_NUMBER", int(week_number) - 38)
 # Current year + next year - 4031 gives us this season
 SEASON_NUMBER = year + (year + 1) - 4031
 # YouTube Data API Key
