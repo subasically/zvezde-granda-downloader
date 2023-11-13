@@ -21,6 +21,7 @@ todays_date_eu = now.strftime("%d.%m.%Y")
 
 API_KEY = os.getenv("API_KEY", "")
 SLACK_WEBHOOK = os.getenv("SLACK_WEBHOOK", "")
+VIDEO_DATE = os.getenv("VIDEO_DATE", todays_date_eu)
 # Get only current Saturday's video
 # PUBLISHED_AFTER = os.getenv("PUBLISHED_AFTER", now.strftime('%Y-%m-%dT00:00:00Z'))
 # PUBLISHED_BEFORE =  os.getenv("PUBLISHED_BEFORE", now.strftime(f'{tomorrow}T00:00:00Z'))
