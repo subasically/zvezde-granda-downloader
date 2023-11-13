@@ -1,6 +1,7 @@
 import yt_dlp
 import save_file
 import notification
+import sys
 
 
 def video(response, FILENAME, FORMAT, WEBHOOK):
@@ -18,4 +19,10 @@ def video(response, FILENAME, FORMAT, WEBHOOK):
         print("Downloading", FILENAME)
         ydl.download(video_url)
 
-        notification.slack(WEBHOOK, "Zvezde Granda Downloader", FILENAME, thumb_max_url)
+        if WEBHOOK:
+            notification.slack(
+                WEBHOOK, "Zvezde Granda Downloader", FILENAME, thumb_max_url
+            )
+        else:
+            print("No Slack webhook provided. Notification will not be sent. Exiting.")
+            sys.exit()
