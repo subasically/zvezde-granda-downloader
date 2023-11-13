@@ -1,13 +1,12 @@
 name: Publish Docker image
 
-# on:
-#   release:
-#     types: [published]
-
 on:
-  # Runs on pushes targeting the default branch
   push:
+    # Runs on pushes targeting the default branch
     branches: ["main"]
+  release:
+    # Runs on release creation
+    types: [published]
 
 jobs:
   push_to_registry:
