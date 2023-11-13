@@ -6,6 +6,8 @@ import pytz
 tz = pytz.timezone("Europe/Berlin")
 now = tz.localize(datetime.now())
 
+print("Current time:", now)
+
 # Local Modules
 import download
 import search
