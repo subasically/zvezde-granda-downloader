@@ -1,9 +1,10 @@
 import sys
 from googleapiclient.discovery import build
 
-def channel_videos(QUERY, API_KEY,CHANNEL_ID, MAX_RESULTS):
-    print("Searching for new episodes...", QUERY, CHANNEL_ID)
-    youtube = build('youtube', 'v3', developerKey=API_KEY)
+
+def channel_videos(QUERY, API_KEY, CHANNEL_ID, MAX_RESULTS):
+    print("Searching for new episodes...", QUERY)
+    youtube = build("youtube", "v3", developerKey=API_KEY)
 
     request = youtube.search().list(
         part="snippet",
