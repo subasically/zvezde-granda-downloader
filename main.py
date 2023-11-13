@@ -3,7 +3,7 @@ import sys
 from datetime import datetime, timedelta
 import pytz
 
-tz = pytz.timezone("Germany/Berlin")
+tz = pytz.timezone("Europe/Berlin")
 now = tz.localize(datetime.now())
 
 # Local Modules
@@ -19,14 +19,18 @@ todays_day = now.strftime("%A")
 todays_date = now.strftime("%Y-%m-%d")
 todays_date_eu = now.strftime("%d.%m.%Y")
 
-API_KEY = os.getenv("API_KEY", "")
-SLACK_WEBHOOK = os.getenv("SLACK_WEBHOOK", "")
-VIDEO_DATE = os.getenv("VIDEO_DATE", todays_date_eu)
+API_KEY = os.getenv("API_KEY", "AIzaSyA3K-ylDNYLsxobA2l4_ktrRDV71EdZzoo")
+SLACK_WEBHOOK = os.getenv(
+    "SLACK_WEBHOOK",
+    "https://hooks.slack.com/services/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",
+)
+# VIDEO_DATE = os.getenv("VIDEO_DATE", todays_date_eu)
+VIDEO_DATE = os.getenv("VIDEO_DATE", "11-11-2023")
 EPISODE_NUMBER = os.getenv("EPISODE_NUMBER", int(week_number) - 38)
 SEASON_NUMBER = year + (year + 1) - 4031
 CHANNEL_ID = os.getenv("CHANNEL_ID", "UChz9nfVNmUiZryQtekbzS5g")
 QUERY = os.getenv("QUERY", f"Zvezde Granda Cela emisija {VIDEO_DATE}")
-FILENAME = f"Zvezde Granda - S{SEASON_NUMBER:02}E{EPISODE_NUMBER:02}"
+FILENAME = f"Zvezde Granda - S{SEASON_NUMBER:02}E{EPISODE_NUMBER:02} - {VIDEO_DATE}"
 MAX_RESULTS = 1
 FORMAT = "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best"
 
@@ -49,10 +53,9 @@ if __name__ == "__main__":
     try:
         search_results = search.channel_videos(QUERY, API_KEY, CHANNEL_ID, MAX_RESULTS)
     except ValueError:
-        print("Invalid value!")
+        print("Invalid search value!")
 
     try:
         download.video(search_results, FILENAME, FORMAT, SLACK_WEBHOOK)
-        print("downloading")
     except ValueError:
-        print("Invalid value!")
+        print("Invalid download value!")

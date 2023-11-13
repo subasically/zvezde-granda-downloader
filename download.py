@@ -12,9 +12,10 @@ def video(response, FILENAME, FORMAT, WEBHOOK):
         thumbnail_url = item["snippet"]["thumbnails"]["high"]["url"]
         thumb_max_url = thumbnail_url.replace("hqdefault", "maxresdefault")
 
-        print(thumb_max_url)
+        # print(thumb_max_url)
         save_file.thumbnail(thumb_max_url, "${FILENAME}.png")
 
+        print("Downloading", FILENAME)
         ydl.download(video_url)
 
         notification.slack(WEBHOOK, "Zvezde Granda Downloader", FILENAME, thumb_max_url)
