@@ -19,10 +19,10 @@ todays_day = now.strftime("%A")
 todays_date = now.strftime("%Y-%m-%d")
 todays_date_eu = now.strftime("%d.%m.%Y")
 
-API_KEY = os.getenv("API_KEY", "AIzaSyA3K-ylDNYLsxobA2l4_ktrRDV71EdZzoo")
+API_KEY = os.getenv("API_KEY", "")
 SLACK_WEBHOOK = os.getenv(
     "SLACK_WEBHOOK",
-    "https://hooks.slack.com/services/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",
+    "",
 )
 # VIDEO_DATE = os.getenv("VIDEO_DATE", todays_date_eu)
 VIDEO_DATE = os.getenv("VIDEO_DATE", "11-11-2023")
