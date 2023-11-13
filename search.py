@@ -16,8 +16,6 @@ def channel_videos(QUERY, API_KEY, CHANNEL_ID, MAX_RESULTS):
 
     response = request.execute()
 
-    # print(response)
-
     if not response["items"]:
         print("No new episodes :(")
         sys.exit()
