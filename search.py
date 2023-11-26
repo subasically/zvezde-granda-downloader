@@ -20,5 +20,5 @@ def channel_videos(QUERY, API_KEY, CHANNEL_ID, MAX_RESULTS):
         print("No new episodes found. Exiting. ☹️")
         sys.exit()
     else:
-        print("New episode found! 😃🥳", response["items"][0]["snippet"]["title"])
+        print("New episode found! 🥳", response["items"][0]["snippet"]["title"])
         return response

@@ -13,7 +13,6 @@ def video(response, FILENAME, FORMAT, WEBHOOK):
         thumbnail_url = item["snippet"]["thumbnails"]["high"]["url"]
         thumb_max_url = thumbnail_url.replace("hqdefault", "maxresdefault")
 
-        print("saving thumbnail", thumb_max_url)
         save_file.thumbnail(thumb_max_url, f"{FILENAME}.png")
 
         print("Downloading", FILENAME)
