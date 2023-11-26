@@ -9,7 +9,6 @@ def channel_videos(QUERY, API_KEY, CHANNEL_ID, MAX_RESULTS):
     request = youtube.search().list(
         part="snippet",
         q=QUERY,
-        # type="video",
         maxResults=MAX_RESULTS,
         channelId=CHANNEL_ID,
     )
