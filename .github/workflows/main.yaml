@@ -3,7 +3,7 @@ name: Publish Docker image
 on:
   push:
     # Runs on pushes targeting the default branch
-    branches: ["main"]
+    branches: ["latest"]
   release:
     # Runs on release creation
     types: [published]
