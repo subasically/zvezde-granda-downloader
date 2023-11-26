@@ -31,7 +31,7 @@ EPISODE_NUMBER = os.getenv("EPISODE_NUMBER", int(week_number) - 37)
 SEASON_NUMBER = year + (year + 1) - 4031
 CHANNEL_ID = os.getenv("CHANNEL_ID", "UChz9nfVNmUiZryQtekbzS5g")
 QUERY = os.getenv(
-    "QUERY", f"Zvezde Granda - Cela emisija {EPISODE_NUMBER:02} - 18.11.2023"
+    "QUERY", f"Zvezde Granda - Cela emisija {EPISODE_NUMBER:02} - {VIDEO_DATE}"
 )
 FILENAME = f"Zvezde Granda - S{SEASON_NUMBER:02}E{EPISODE_NUMBER:02} - {VIDEO_DATE}"
 MAX_RESULTS = 1
