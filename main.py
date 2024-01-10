@@ -1,27 +1,30 @@
 import os
 import sys
 from datetime import datetime, timedelta
-import pytz
+
+# import pytz
 
 # Local Modules
 import download
 import search
+from pytz import timezone
 
-timezone = os.getenv("TIMEZONE", "Europe/Stockholm")
-tz = pytz.timezone(timezone)
-now = tz.localize(datetime.now())
-now = now.replace(tzinfo=None)  # Convert to naive datetime object
+# from datetime import datetime
+# import os
+
+timezones = os.getenv("TIMEZONE", "US/Central")
+tz = timezone(timezones)
+now = datetime.now(tz)
 
 print(
-    f"Current Time ({timezone}):",
-    now.strftime("%Y-%m-%d %H:%M:%S" + " " + tz.zone),
+    f"Current Time ({timezones}):",
+    now.strftime("%Y-%m-%d %H:%M:%S"),
 )
 
 episode_adjustment = int(os.getenv("EPISODE_ADJUSTMENT", 1))
 start_date = os.getenv("START_DATE", now.strftime("2023-09-23"))  # 2023-09-23
 start_date_obj = datetime.strptime(start_date, "%Y-%m-%d")  # 2023-09-23
 start_date_year = datetime.strptime(start_date, "%Y-%m-%d").year  # 2023
-weeks_since_start = (now - start_date_obj).days // 7  # 0-52
 today = now.strftime("%Y-%m-%d")  # 2023-01-01
 yesterday = (now - timedelta(days=1)).strftime("%Y-%m-%d")  # -1 day
 tomorrow = (now - timedelta(days=-1)).strftime("%Y-%m-%d")  # +1 day
@@ -50,9 +53,13 @@ SLACK_WEBHOOK = os.getenv(
     "",
 )
 VIDEO_DATE = os.getenv("VIDEO_DATE", video_date)
-EPISODE_NUMBER = os.getenv("EPISODE_NUMBER", weeks_since_start + episode_adjustment)
 SEASON_NUMBER = os.getenv("SEASON_NUMBER", start_date_year - 2008)
 CHANNEL_ID = os.getenv("CHANNEL_ID", "")
+
+now = now.replace(tzinfo=None)  # Convert to naive datetime object
+weeks_since_start = (now - start_date_obj).days // 7  # 0-52
+EPISODE_NUMBER = os.getenv("EPISODE_NUMBER", weeks_since_start + episode_adjustment)
+
 QUERY = os.getenv(
     "QUERY", f"Zvezde Granda - Cela emisija {EPISODE_NUMBER:02} - {VIDEO_DATE}"
 )

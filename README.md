@@ -7,7 +7,7 @@ Downloads newest episode uploaded.
 | API_KEY            | yes      | string | ""                                                 |
 | START_DATE         | yes      | string | "2023-09-23"                                       |
 | CHANNEL_ID         | yes      | string | ""                                                 |
-| TIMEZONE           | no       | string | "Europe/Stockholm"                                 |
+| TIMEZONE           | no       | string | "US/Central"                                       |
 | SLACK_WEBHOOK      | no       | string | ""                                                 |
 | VIDEO_DATE         | no       | string | "DD.MM.YYYY"                                       |
 | QUERY              | no       | string | "Zvezde Granda - Cela emisija S15E01 - DD.MM.YYYY" |
