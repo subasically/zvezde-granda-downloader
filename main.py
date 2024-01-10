@@ -7,7 +7,8 @@ import pytz
 import download
 import search
 
-tz = os.getenv("TIMEZONE", pytz.timezone("Europe/Stockholm"))
+timezone = os.getenv("TIMEZONE", "Europe/Stockholm")
+tz = pytz.timezone(timezone)
 now = tz.localize(datetime.now())
 now = now.replace(tzinfo=None)  # Convert to naive datetime object
 
