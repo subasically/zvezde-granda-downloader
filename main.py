@@ -13,7 +13,8 @@ now = tz.localize(datetime.now())
 now = now.replace(tzinfo=None)  # Convert to naive datetime object
 
 print(
-    "Current Time (with timezone):", now.strftime("%Y-%m-%d %H:%M:%S" + " " + tz.zone)
+    f"Current Time ({timezone}):",
+    now.strftime("%Y-%m-%d %H:%M:%S" + " " + tz.zone),
 )
 
 episode_adjustment = int(os.getenv("EPISODE_ADJUSTMENT", 1))
