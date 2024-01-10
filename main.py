@@ -7,11 +7,11 @@ import pytz
 import download
 import search
 
-tz = pytz.timezone("Europe/Berlin")
+tz = os.getenv("TIMEZONE", pytz.timezone("Europe/Stockholm"))
 now = tz.localize(datetime.now())
 now = now.replace(tzinfo=None)  # Convert to naive datetime object
 
-print("Current Time:", now.strftime("%Y-%m-%d %H:%M:%S"))
+print("Current Time:", now.strftime("%Y-%m-%d %H:%M:%S" + " " + tz.zone))
 
 episode_adjustment = int(os.getenv("EPISODE_ADJUSTMENT", 1))
 start_date = os.getenv("START_DATE", now.strftime("2023-09-23"))  # 2023-09-23

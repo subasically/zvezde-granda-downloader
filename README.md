@@ -7,6 +7,7 @@ Downloads newest episode uploaded.
 | API_KEY            | yes      | string | ""                                                 |
 | START_DATE         | yes      | string | "2023-09-23"                                       |
 | CHANNEL_ID         | yes      | string | ""                                                 |
+| TIMEZONE           | no       | string | "Europe/Stockholm"                                 |
 | SLACK_WEBHOOK      | no       | string | ""                                                 |
 | VIDEO_DATE         | no       | string | "DD.MM.YYYY"                                       |
 | QUERY              | no       | string | "Zvezde Granda - Cela emisija S15E01 - DD.MM.YYYY" |
@@ -21,6 +22,7 @@ docker run --rm \
     -e API_KEY="***INSERT_API_KEY_HERE***" \
     -e CHANNEL_ID="***INSERT_YOUTUBE_CHANNEL_ID***" \
     -e SLACK_WEBHOOK="***INSERT_SLACK_WEBHOOK_HERE***" \
+    -e VIDEO_DATE="25.11.2023" \
     -v "/local/folder/show/season/:/usr/src/app/downloads" \
     subasically/zvezde-granda-downloader:main
 ```
