@@ -38,7 +38,7 @@ elif todays_day == "Tuesday":
     print("Tuesday")
     video_date = (now - timedelta(days=3)).strftime("%d.%m.%Y")
 else:
-    video_date = todays_date.strftime("%d.%m.%Y")
+    video_date = now.strftime("%d.%m.%Y")
 
 API_KEY = os.getenv("API_KEY", "")
 SLACK_WEBHOOK = os.getenv(
