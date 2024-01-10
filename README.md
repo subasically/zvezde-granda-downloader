@@ -14,6 +14,7 @@ Downloads newest episode uploaded.
 | EPISODE_ADJUSTMENT | no       | string | 1                                                  |
 | EPISODE_NUMBER     | no       | string | "weeks_since_start_date + episode_adjustmen"       |
 | SEASON_NUMBER      | no       | string | "start_date_year - 2008"                           |
+| DEBUG              | no       | string | "False"                                            |
 
 ```bash
 docker run --rm \
