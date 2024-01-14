@@ -1,6 +1,9 @@
 import os
 import sys
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # import pytz
 
@@ -16,6 +19,13 @@ def print_debug(*args, **kwargs):
     if debug == "True":
         print(*args, **kwargs)
 
+
+API_KEY = os.getenv("API_KEY", "")
+SLACK_WEBHOOK = os.getenv(
+    "SLACK_WEBHOOK",
+    "",
+)
+CHANNEL_ID = os.getenv("CHANNEL_ID", "")
 
 print_debug(f"**************************************************")
 print_debug(f"***************** DEBUGGING: {debug} ****************")
@@ -53,14 +63,8 @@ elif todays_day == "Tuesday":
 else:
     video_date = now.strftime("%d.%m.%Y")
 
-API_KEY = os.getenv("API_KEY", "")
-SLACK_WEBHOOK = os.getenv(
-    "SLACK_WEBHOOK",
-    "",
-)
 VIDEO_DATE = os.getenv("VIDEO_DATE", video_date)
 SEASON_NUMBER = os.getenv("SEASON_NUMBER", start_date_year - 2008)
-CHANNEL_ID = os.getenv("CHANNEL_ID", "")
 
 now = now.replace(tzinfo=None)  # Convert to naive datetime object
 weeks_since_start = (now - start_date_obj).days // 7  # 0-52
@@ -82,20 +86,42 @@ if os.path.isfile(f"downloads/{FILENAME}"):
 
 # Exit if api key is missing
 if not API_KEY:
-    print("API_KEY invalid or null")
+    print("⚠️ API_KEY invalid or null")
     sys.exit()
 
 if not CHANNEL_ID:
-    print("CHANNEL_ID invalid or null")
+    print("⚠️ CHANNEL_ID invalid or null")
     sys.exit()
 
 if __name__ == "__main__":
     try:
         search_results = search.channel_videos(QUERY, API_KEY, CHANNEL_ID, MAX_RESULTS)
     except ValueError:
-        print("Invalid search value!")
+        print("⚠️ Invalid search value!")
+
+    try:
+        # verify that episode number in FILENAME matches the search_results episode number
+        print(
+            f"Verify that episode number in FILENAME matches the search_results episode number."
+        )
+        try:
+            search_results_episode_number = FILENAME.split("-")[1].split("E")[1].strip()
+        except IndexError:
+            print("⚠️ Invalid episode number!")
+            sys.exit()
+        # print(f"EPISODE_NUMBER: {EPISODE_NUMBER}")
+        # print(f"search_results_episode_number: {search_results_episode_number}")
+
+        if int(EPISODE_NUMBER) != int(search_results_episode_number):
+            print("⚠️ Episode numbers do not match!")
+            raise ValueError
+        else:
+            print("✅ Episode numbers match! Proceeding with download.")
+    except ValueError:
+        print("Invalid episode number!")
+        sys.exit()
 
     try:
         download.video(search_results, FILENAME, FORMAT, SLACK_WEBHOOK)
     except ValueError:
-        print("Invalid download value!")
+        print("⚠️ Invalid download value!")
