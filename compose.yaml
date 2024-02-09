@@ -1,0 +1,14 @@
+---
+
+services:
+  app:
+    container_name: zvezde-granda-downloader
+    # image: subasically/zvezde-granda-downloader:latest # Disable for local development
+    build: .
+    volumes:
+      - /home/subasically/repo/zvezde-granda-downloader/downloads:/usr/src/app/downloads
+    environment:
+      - API_KEY=AIzaSyA3K-ylDNYLsxobA2l4_ktrRDV71EdZzoo
+      - CHANNEL_ID=UChz9nfVNmUiZryQtekbzS5g
+      - SLACK_WEBHOOK=https://hooks.slack.com/services/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
+    restart: always

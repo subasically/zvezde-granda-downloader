@@ -1,11 +1,16 @@
+from __future__ import unicode_literals
+
 import yt_dlp
 import save_file
 import notification
 import sys
 
-
-def video(response, FILENAME, FORMAT, WEBHOOK):
-    ydl_options = {"outtmpl": "downloads/" + FILENAME, "format": FORMAT}
+def video(response, FILENAME, FORMAT, WEBHOOK, SEASON_NUMBER, EPISODE_NUMBER, todays_date):
+    ydl_options = {
+        "outtmpl": "downloads/" + FILENAME, 
+        "format": FORMAT, 
+        "quiet": False,
+        }
     ydl = yt_dlp.YoutubeDL(ydl_options)
 
     for item in response["items"]:
@@ -17,12 +22,20 @@ def video(response, FILENAME, FORMAT, WEBHOOK):
         save_file.thumbnail(thumb_max_url, f"{FILENAME}.png")
 
         print("Downloading", FILENAME)
-        ydl.download(video_url)
+        # ydl.download(video_url)
 
         if WEBHOOK:
+            print("Sending notification to Slack")
             notification.slack(
-                WEBHOOK, "Zvezde Granda Downloader", FILENAME, thumb_max_url
+                WEBHOOK, "New Episode! ✌️", FILENAME, thumb_max_url
             )
+            
+            print("Updating downloads_history.csv")
+            # Update downloads_history.csv with new line for the new episode
+            with open("downloads/downloads_history.csv", "a") as file:
+                file.write(
+                    f"{SEASON_NUMBER},{EPISODE_NUMBER},{todays_date}\n"
+                )
         else:
             print("No Slack webhook provided. Notification will not be sent. Exiting.")
             sys.exit()

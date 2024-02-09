@@ -2,8 +2,8 @@ FROM python:alpine
 
 WORKDIR /usr/src/app
 
+ADD main.py .
 COPY requirements.txt ./
-COPY main.py ./
 
 RUN apk add --no-cache ffmpeg
 RUN pip install --no-cache-dir -r requirements.txt
