@@ -1,7 +1,11 @@
 import os
 import sys
+import schedule
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
+from config import Configuration
+
+config = Configuration('config.json')
 
 load_dotenv()
 
@@ -9,6 +13,7 @@ load_dotenv()
 import download
 import search
 from pytz import timezone
+import time
 
 debug = os.getenv("DEBUG", "False")
 
@@ -18,14 +23,14 @@ def print_debug(*args, **kwargs):
 
 
 API_KEY = os.getenv("API_KEY", "")
-
+CHANNEL_ID = os.getenv("CHANNEL_ID", "")
 SLACK_WEBHOOK = os.getenv(
     "SLACK_WEBHOOK",
     "",
 )
-CHANNEL_ID = os.getenv("CHANNEL_ID", "")
 
 FORMAT = os.getenv("FORMAT", "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best")
+SCHEDULE = os.getenv("SCHEDULE", "0 16-23 * * 6") # Saturday from 4 PM to 11 PM
 
 print_debug(f"**************************************************")
 print_debug(f"***************** DEBUGGING: {debug} ****************")
@@ -94,25 +99,36 @@ if os.path.isfile(f"downloads/{FILENAME}"):
 
 # Exit if api key is missing
 if not API_KEY:
-    print("⚠️ API_KEY invalid or null")
+    print("⚠️ API_KEY invalid or null ⚠️")
     sys.exit()
 
 if not CHANNEL_ID:
-    print("⚠️ CHANNEL_ID invalid or null")
+    print("⚠️ CHANNEL_ID invalid or null ⚠️")
     sys.exit()
+    
+def episode_file_exists():
+    try:
+        # Check if season,episode exists in downloads_history.csv
+        if os.path.isfile("downloads/downloads_history.csv"):
+            with open("downloads/downloads_history.csv", "r") as f:
+                lines = f.readlines()
+                for line in lines:
+                    print_debug(f"downloads_history.csv: {line}")
+                    print_debug(f"SEASON_NUMBER,{SEASON_NUMBER}")
+                    if f"{SEASON_NUMBER},{EPISODE_NUMBER}" in line:
+                        print_debug(f"{FILENAME} already downloaded. Exiting.")
+                        
+                        # Quit program if episode already downloaded
+                        sys.exit()
+    except ValueError:
+        print_debug("⚠️ Invalid downloads_history.csv value!")
+        sys.exit()
 
-# Check if season,episode exists in downloads_history.csv
-if os.path.isfile("downloads/downloads_history.csv"):
-    with open("downloads/downloads_history.csv", "r") as f:
-        lines = f.readlines()
-        for line in lines:
-            print_debug(f"downloads_history.csv: {line}")
-            print_debug(f"SEASON_NUMBER,{SEASON_NUMBER}")
-            if f"{SEASON_NUMBER},{EPISODE_NUMBER}" in line:
-                print_debug(f"{FILENAME} already downloaded. Exiting.")
-                sys.exit()
-if __name__ == "__main__":
-
+def run_downloader():
+    if episode_file_exists():
+        # print_debug(f"{FILENAME} already downloaded. Exiting.")
+        sys.exit()
+        
     try:
         search_results = search.channel_videos(QUERY, API_KEY, CHANNEL_ID, MAX_RESULTS)
     except ValueError:
@@ -144,3 +160,10 @@ if __name__ == "__main__":
         download.video(search_results, FILENAME, FORMAT, SLACK_WEBHOOK, SEASON_NUMBER, EPISODE_NUMBER, todays_date)
     except ValueError:
         print_debug("⚠️ Invalid download value!")
+
+if __name__ == "__main__":
+    schedule.every().cron(SCHEDULE).do(run_downloader)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(1)

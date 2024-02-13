@@ -11,4 +11,5 @@ services:
       - API_KEY=${YOUR_YOUTUBE_API_KEY}
       - CHANNEL_ID=${DESIRED_YOUTUBE_CHANNEL_ID}
       - SLACK_WEBHOOK=${SLACK_WEBHOOK_URL}
+      - SCHEDULE=0 16-23 * * 6 # Saturday from 4 PM to 11 PM
     restart: always
