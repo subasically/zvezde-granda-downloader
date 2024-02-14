@@ -1,3 +1,4 @@
 __pycache__/
 .env
-.png
+/downloads/*.png
+/downloads/*.mp4

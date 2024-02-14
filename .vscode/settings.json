@@ -4,6 +4,13 @@
     },
     "python.formatting.provider": "none",
     "cSpell.words": [
-        "outtmpl"
+        "bestaudio",
+        "bestvideo",
+        "dotenv",
+        "googleapiclient",
+        "hqdefault",
+        "maxresdefault",
+        "outtmpl",
+        "pytz"
     ]
 }
