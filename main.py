@@ -266,25 +266,25 @@ if __name__ == "__main__":
     main()
 
     if SCHEDULE == "@5min":
-        print("[Schedule] Running every 5 minutes...")
+        print_debug("[Schedule] Running every 5 minutes...")
         schedule.every(5).minutes.do(main)
     elif SCHEDULE == "@15min":
-        print("[Schedule] Running every 15 minutes...")
+        print_debug("[Schedule] Running every 15 minutes...")
         schedule.every(15).minutes.do(main)
     elif SCHEDULE == "@30min":
-        print("[Schedule] Running every 30 minutes...")
+        print_debug("[Schedule] Running every 30 minutes...")
         schedule.every(30).minutes.do(main)
     elif SCHEDULE == "@hourly":
-        print("[Schedule] Running every hour...")
+        print_debug("[Schedule] Running every hour...")
         schedule.every().hour.at(":00").do(main)
     elif SCHEDULE == "@daily":
-        print("[Schedule] Running daily...")
+        print_debug("[Schedule] Running daily...")
         schedule.every().day.at("18:00").do(main)
     elif SCHEDULE == "@weekly":
-        print("[Schedule] Running weekly...")
+        print_debug("[Schedule] Running weekly...")
         schedule.every().saturday.at("18:00").do(main)
     else:
-        print("[Schedule] ⚠️ Invalid SCHEDULE value!")
+        print_debug("[Schedule] ⚠️ Invalid SCHEDULE value!")
         sys.exit()
 
     while True:
