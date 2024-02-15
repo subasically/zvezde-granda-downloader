@@ -107,7 +107,8 @@ def download(response):
     ydl_options = {
         "outtmpl": "downloads/" + FILENAME,
         "format": FORMAT,
-        "quiet": True
+        "quiet": os.getenv("YDL_QUIET", "True"),
+        "no_warnings": os.getenv("YDL_NO_WARNINGS", "True"),
     }
     ydl = yt_dlp.YoutubeDL(ydl_options)
 
