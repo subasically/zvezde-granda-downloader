@@ -42,7 +42,7 @@ if debug == "True":
     print(f"**************************************************")
 
 print(f"\nContainer Timezone: ({timezones})")
-print(f"nContainer Time: {now.strftime('%Y-%m-%d %H:%M:%S')}\n")
+print(f"\nContainer Time: {now.strftime('%Y-%m-%d %H:%M:%S')}\n")
 
 episode_adjustment = int(os.getenv("EPISODE_ADJUSTMENT", 1))
 start_date = os.getenv("START_DATE", now.strftime("2023-09-23"))
