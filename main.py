@@ -23,6 +23,7 @@ timezones = os.getenv("TIMEZONE", "US/Central")
 tz = timezone(timezones)
 now = datetime.now(tz)
 
+
 def get_timestamp():
     return datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
 
@@ -31,10 +32,12 @@ def get_timestamp():
 
 debug = os.getenv("DEBUG", "False")
 
+
 def print_debug(*args, **kwargs):
     if debug == "True":
         tstamp = get_timestamp()
         print(f"[{tstamp}]", *args, **kwargs)
+
 
 if debug == "True":
     print(f"**************************************************")
@@ -72,7 +75,9 @@ SEASON_NUMBER = os.getenv("SEASON_NUMBER", str(start_date_year - 2008))
 
 now = now.replace(tzinfo=None)  # Convert to naive datetime object
 weeks_since_start = (now - start_date_obj).days // 7  # 0-52
-EPISODE_NUMBER = os.getenv("EPISODE_NUMBER", str(weeks_since_start + episode_adjustment))
+EPISODE_NUMBER = os.getenv(
+    "EPISODE_NUMBER", str(weeks_since_start + episode_adjustment)
+)
 
 QUERY = os.getenv(
     "QUERY", f"Zvezde Granda - Cela emisija {EPISODE_NUMBER:02} - {VIDEO_DATE}"
@@ -96,12 +101,14 @@ if not CHANNEL_ID:
     print("⚠️ CHANNEL_ID invalid or null ⚠️")
     sys.exit()
 
+
 def save_thumbnail(url, filename):
     print_debug(f"[Save_Thumbnail] Saving thumbnail {filename}...")
     data = requests.get(url).content
     f = open(f"downloads/{filename}", "wb")
     f.write(data)
     f.close()
+
 
 def download(response):
     ydl_options = {
@@ -131,12 +138,13 @@ def download(response):
 
         if SLACK_WEBHOOK:
             print_debug("[Download] Sending notification to Slack")
-            notification.slack(
-                SLACK_WEBHOOK, "New Episode! ✌️", FILENAME, thumb_max_url
-            )
+            notification.slack(SLACK_WEBHOOK, "New Episode! ✌️", FILENAME, thumb_max_url)
         else:
-            print_debug("[Download] ☹️ No Slack webhook provided. Notification will not be sent. Exiting.")
+            print_debug(
+                "[Download] ☹️ No Slack webhook provided. Notification will not be sent. Exiting."
+            )
             sys.exit()
+
 
 def search():
     print_debug("[Search] Searching for new episodes...", QUERY)
@@ -155,41 +163,67 @@ def search():
         print_debug("[Search] No new episodes found. Exiting. ☹️")
         sys.exit()
     else:
-        print_debug("[Search] New episode found! 🥳", response["items"][0]["snippet"]["title"])
+        print_debug(
+            "[Search] New episode found! 🥳", response["items"][0]["snippet"]["title"]
+        )
         return response
 
+
 def episode_exists():
-    print_debug(f"[Episode_Exists] Checking if S{SEASON_NUMBER}E{EPISODE_NUMBER} exists in downloads folder.")
+    print_debug(
+        f"[Episode_Exists] Checking if S{SEASON_NUMBER}E{EPISODE_NUMBER} exists in downloads folder."
+    )
     # Search for file that contains season and episode number in /downloads directory
     import glob
 
-    episode_files = glob.glob(f"downloads/*S{SEASON_NUMBER:02}E{EPISODE_NUMBER:02}*.mp4")
+    episode_files = glob.glob(
+        f"downloads/*S{SEASON_NUMBER:02}E{EPISODE_NUMBER:02}*.mp4"
+    )
 
     if episode_files:
-        print_debug(f"[Episode_Exists] Episode S{SEASON_NUMBER:02}E{EPISODE_NUMBER:02} already downloaded. Cancelling.")
+        print_debug(
+            f"[Episode_Exists] Episode S{SEASON_NUMBER:02}E{EPISODE_NUMBER:02} already downloaded. Cancelling."
+        )
         return True
     else:
-        print_debug(f"[Episode_Exists] Episode S{SEASON_NUMBER:02}E{EPISODE_NUMBER:02} not found in downloads.")
+        print_debug(
+            f"[Episode_Exists] Episode S{SEASON_NUMBER:02}E{EPISODE_NUMBER:02} not found in downloads."
+        )
         return False
 
 
 def main():
     print_debug(f"[Main] Running downloader for {FILENAME}...")
     if episode_exists():
-        print_debug(f"[Main] S{SEASON_NUMBER}E{EPISODE_NUMBER} already downloaded. Cancelling.")
+        print_debug(
+            f"[Main] S{SEASON_NUMBER}E{EPISODE_NUMBER} already downloaded. Cancelling."
+        )
         schedule.cancel_job(main)
         # Pause until next episode airs on Saturday at 4pm
         print_debug(f"[Main] Pausing until next episode airs on Saturday at 4pm...")
-        if todays_day == "Saturday":
-            print_debug(f"[Main] It's Saturday! Let's check the time...")
-            if now.hour < 16:
-                print_debug(f"[Main] It's not 4pm yet.")
-            else:
-                print_debug(f"[Main] It's 4pm! Proceeding with download.")
-        else:
-            print_debug(f"[Main] It's not Saturday.")
+
+        # Calculate the next Saturday at 4pm
+        next_saturday = now + timedelta((5 - now.weekday()) % 7)
+        next_saturday = next_saturday.replace(hour=16, minute=0, second=0)
+
+        # Calculate the time difference between now and the next Saturday at 4pm
+        time_difference = (next_saturday - now).total_seconds()
+        days = int(time_difference // (24 * 3600))
+        time_difference %= 24 * 3600
+        hours = int(time_difference // 3600)
+        time_difference %= 3600
+        minutes = int(time_difference // 60)
+
+        print_debug(
+            f"[Main] Sleeping for {days} days, {hours} hours, {minutes} minutes..."
+        )
+
+        # Sleep until the next Saturday at 4pm
+        time.sleep(time_difference)
     else:
-        print_debug(f"[Main] S{SEASON_NUMBER}E{EPISODE_NUMBER} not found in downloads. Proceeding with download.")
+        print_debug(
+            f"[Main] S{SEASON_NUMBER}E{EPISODE_NUMBER} not found in downloads. Proceeding with download."
+        )
 
         try:
             print_debug(f"[Main] Searching for {QUERY}...")
@@ -203,7 +237,9 @@ def main():
                 f"[Main] Verify that episode number in FILENAME matches the search_results episode number."
             )
             try:
-                search_results_episode_number = FILENAME.split("-")[1].split("E")[1].strip()
+                search_results_episode_number = (
+                    FILENAME.split("-")[1].split("E")[1].strip()
+                )
             except IndexError:
                 print_debug("[Main] ⚠️ Invalid episode number!")
                 sys.exit()
@@ -212,7 +248,9 @@ def main():
                 print_debug("[Main] ⚠️ Episode numbers do not match!")
                 raise ValueError
             else:
-                print_debug("[Main] ✅ Episode numbers match! Proceeding with download.")
+                print_debug(
+                    "[Main] ✅ Episode numbers match! Proceeding with download."
+                )
         except ValueError:
             print_debug("[Main] Invalid episode number!")
             sys.exit()
@@ -222,10 +260,11 @@ def main():
         except ValueError:
             print_debug("[Main] ⚠️ Invalid download value!")
 
+
 if __name__ == "__main__":
     print_debug(f"[Main] Startup...")
     main()
-    
+
     if SCHEDULE == "@5min":
         print("[Schedule] Running every 5 minutes...")
         schedule.every(5).minutes.do(main)
@@ -250,9 +289,9 @@ if __name__ == "__main__":
 
     while True:
         schedule.run_pending()
-        
+
         n = schedule.idle_seconds()
-        
+
         if n is None:
             # no more jobs
             break
