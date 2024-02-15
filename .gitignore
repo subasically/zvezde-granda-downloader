@@ -1,4 +1,7 @@
 __pycache__/
 .env
+*.log
 /downloads/*.png
 /downloads/*.mp4
+/downloads/*.part
+/downloads/*.ytdl
