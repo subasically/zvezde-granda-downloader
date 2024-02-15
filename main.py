@@ -42,7 +42,7 @@ if debug == "True":
     print(f"**************************************************")
 
 print(f"\nContainer Timezone: ({timezones})")
-print(f"nContainer Time: {now.strftime('%Y-%m-%d %H:%M:%S')}\n")
+print(f"\nContainer Time: {now.strftime('%Y-%m-%d %H:%M:%S')}\n")
 
 episode_adjustment = int(os.getenv("EPISODE_ADJUSTMENT", 1))
 start_date = os.getenv("START_DATE", now.strftime("2023-09-23"))
@@ -107,7 +107,8 @@ def download(response):
     ydl_options = {
         "outtmpl": "downloads/" + FILENAME,
         "format": FORMAT,
-        "quiet": True
+        "quiet": os.getenv("YDL_QUIET", "True"),
+        "no_warnings": os.getenv("YDL_NO_WARNINGS", "True"),
     }
     ydl = yt_dlp.YoutubeDL(ydl_options)
 

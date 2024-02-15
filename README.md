@@ -5,7 +5,6 @@ Downloads newest episode uploaded.
 | parameter          | required | type   | default                                                    |
 | ------------------ | -------- | ------ | -----------------------------------------------------------|
 | API_KEY            | yes      | string | ""                                                         |
-| START_DATE         | yes      | string | "2023-09-23"                                               |
 | CHANNEL_ID         | yes      | string | ""                                                         |
 | FORMAT             | no       | string | "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" |
 | TIMEZONE           | no       | string | "US/Central"                                               |
@@ -16,6 +15,7 @@ Downloads newest episode uploaded.
 | EPISODE_NUMBER     | no       | string | "weeks_since_start_date + episode_adjustmen"               |
 | SEASON_NUMBER      | no       | string | "start_date_year - 2008"                                   |
 | DEBUG              | no       | string | "False"                                                    |
+| SCHEDULE           | no       | string | "@30min"                                                   |
 
 ```bash
 docker run --rm \
