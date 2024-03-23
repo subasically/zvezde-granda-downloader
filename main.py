@@ -109,8 +109,8 @@ if __name__ == "__main__":
         except IndexError:
             print("⚠️ Invalid episode number!")
             sys.exit()
-        # print(f"EPISODE_NUMBER: {EPISODE_NUMBER}")
-        # print(f"search_results_episode_number: {search_results_episode_number}")
+        print_debug(f"EPISODE_NUMBER: {EPISODE_NUMBER}")
+        print_debug(f"search_results_episode_number: {search_results_episode_number}")
 
         if int(EPISODE_NUMBER) != int(search_results_episode_number):
             print("⚠️ Episode numbers do not match!")
