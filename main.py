@@ -234,7 +234,7 @@ def main():
         try:
             # verify that episode number in FILENAME matches the search_results episode number
             print_debug(
-                f"[Main] Verify that episode number in FILENAME matches the search_results episode number."
+                f"[Main] Verify that episode number in FILENAME({FILENAME}) matches the search_results_episode_number({search_results_episode_number})."
             )
             try:
                 search_results_episode_number = (
