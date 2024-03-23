@@ -1,0 +1,16 @@
+---
+
+services:
+  app:
+    container_name: zvezde-granda-downloader
+    image: subasically/zvezde-granda-downloader:latest # Disable for local development
+    build: .
+    volumes:
+      - /home/subasically/repo/zvezde-granda-downloader/downloads:/usr/src/app/downloads # host:container
+    environment:
+      - DEBUG=${DEBUG}
+      - API_KEY=${API_KEY}
+      - CHANNEL_ID=${CHANNEL_ID}
+      - SLACK_WEBHOOK=${SLACK_WEBHOOK}
+      - SCHEDULE=@15min # Every 15 minutes
+    restart: always
