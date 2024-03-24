@@ -161,12 +161,17 @@ def search():
 
     if not response["items"]:
         print_debug("[Search] No new episodes found. Exiting. ☹️")
-        sys.exit()
+        # sys.exit()
+        # Also check if the episode was uploaded today
+
     else:
-        print_debug(
-            "[Search] New episode found! 🥳", response["items"][0]["snippet"]["title"]
-        )
-        return response
+        upload_date = response["items"][0]["snippet"]["publishedAt"].split("T")[0]
+        if upload_date != todays_date:
+            print_debug("[Search] No new episodes found today. Exiting. ☹️")
+            sys.exit()
+        else:
+            print_debug("[Search] New episode found! 🎉")
+            return response
 
 
 def episode_exists():
