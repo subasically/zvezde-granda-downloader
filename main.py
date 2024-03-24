@@ -284,7 +284,7 @@ if __name__ == "__main__":
     elif SCHEDULE == "@30min":
         print_debug("[Schedule] Running every 30 minutes...")
         schedule.every(30).minutes.do(main)
-    elif SCHEDULE == "@hourly":
+    elif SCHEDULE == "@hourly" or SCHEDULE == "@60min":
         print_debug("[Schedule] Running every hour...")
         schedule.every().hour.at(":00").do(main)
     elif SCHEDULE == "@daily":
