@@ -168,7 +168,7 @@ def search():
         upload_date = response["items"][0]["snippet"]["publishedAt"].split("T")[0]
         if upload_date != todays_date:
             print_debug(
-                "[Search] No new episodes uploaded({upload_date}) today({todays_date}). Exiting. ☹️"
+                f"[Search] No new episodes uploaded({upload_date}) today({todays_date}). Exiting. ☹️"
             )
             sys.exit()
         else:
