@@ -232,9 +232,8 @@ def main():
             print("[Main] ⚠️ Invalid search value!")
 
         try:
-            # verify that episode number in FILENAME matches the search_results episode number
             print_debug(
-                f"[Main] Verify that episode number in FILENAME({FILENAME}) matches the search_results_episode_number({search_results_episode_number})."
+                f"[Main] Verify that episode number in FILENAME matches the search_results episode number."
             )
             try:
                 search_results_episode_number = (
@@ -244,6 +243,10 @@ def main():
                 print_debug("[Main] ⚠️ Invalid episode number!")
                 sys.exit()
 
+            print_debug(f"[Main] Episode Number: {EPISODE_NUMBER}")
+            print_debug(
+                f"[Main] Search Results Episode Number: {search_results_episode_number}"
+            )
             if int(EPISODE_NUMBER) != int(search_results_episode_number):
                 print_debug("[Main] ⚠️ Episode numbers do not match!")
                 raise ValueError
