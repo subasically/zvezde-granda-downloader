@@ -165,7 +165,10 @@ def search():
         # Also check if the episode was uploaded today
 
     else:
+        print_debug("[Search] Checking if episode was uploaded today...")
         upload_date = response["items"][0]["snippet"]["publishedAt"].split("T")[0]
+        print_debug(f"[Search] Upload Date: {upload_date}")
+        print_debug(f"[Search] Today's Date: {todays_date}")
         if upload_date != todays_date:
             print_debug(
                 f"[Search] No new episodes uploaded({upload_date}) today({todays_date}). Exiting. ☹️"

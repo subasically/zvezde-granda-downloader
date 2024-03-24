@@ -11,6 +11,7 @@
         "hqdefault",
         "maxresdefault",
         "outtmpl",
-        "pytz"
+        "pytz",
+        "tstamp"
     ]
 }
